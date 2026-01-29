@@ -58,7 +58,7 @@
     --radius: 0.5rem;
 
     /* Sidebar - Dark slate */
-    --sidebar-background: 222 47% 11%;
+    --sidebar-background: 215 100% 20%; /* #003369 */
     --sidebar-foreground: 215 20% 75%;
     --sidebar-primary: 234 89% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -114,7 +114,7 @@
     --input: 222 47% 18%;
     --ring: 234 89% 65%;
 
-    --sidebar-background: 222 47% 8%;
+    --sidebar-background: 215 100% 20%; /* #003369 */
     --sidebar-foreground: 215 20% 75%;
     --sidebar-primary: 234 89% 65%;
     --sidebar-primary-foreground: 0 0% 100%;

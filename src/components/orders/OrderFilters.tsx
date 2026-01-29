@@ -1,15 +1,19 @@
-import { useState } from 'react';
-import { Search, Calendar, Filter, X } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { format } from 'date-fns';
-import { DateRange } from 'react-day-picker';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { Search, Calendar, Filter, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { format } from "date-fns";
+import { DateRange } from "react-day-picker";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface OrderFiltersProps {
   searchQuery: string;
@@ -24,9 +28,9 @@ interface OrderFiltersProps {
   onStatusesChange: (statuses: string[]) => void;
 }
 
-const countries = ['United States', 'United Kingdom', 'Germany', 'France', 'Canada', 'Australia', 'Japan', 'Netherlands', 'Spain', 'Italy'];
-const warehouses = ['US East', 'US West', 'EU Central', 'APAC', 'UK'];
-const statuses = ['Processed', 'On Hold', 'Pending'];
+const countries = ["Belgium", "Netherlands", "France", "Germany", "Luxembourg"];
+const warehouses = ["Luxembourg", "Beringen", "Tessenderlo"];
+const statuses = ["Processed", "On Hold", "Pending"];
 
 export function OrderFilters({
   searchQuery,
@@ -43,13 +47,17 @@ export function OrderFilters({
   const [dateOpen, setDateOpen] = useState(false);
 
   const toggleArrayItem = (arr: string[], item: string): string[] => {
-    return arr.includes(item) ? arr.filter(i => i !== item) : [...arr, item];
+    return arr.includes(item) ? arr.filter((i) => i !== item) : [...arr, item];
   };
 
-  const activeFiltersCount = selectedCountries.length + selectedWarehouses.length + selectedStatuses.length + (dateRange ? 1 : 0);
+  const activeFiltersCount =
+    selectedCountries.length +
+    selectedWarehouses.length +
+    selectedStatuses.length +
+    (dateRange ? 1 : 0);
 
   const clearAllFilters = () => {
-    onSearchChange('');
+    onSearchChange("");
     onDateRangeChange(undefined);
     onCountriesChange([]);
     onWarehousesChange([]);
@@ -73,18 +81,25 @@ export function OrderFilters({
         {/* Date Range */}
         <Popover open={dateOpen} onOpenChange={setDateOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('gap-2', dateRange && 'border-primary text-primary')}>
+            <Button
+              variant="outline"
+              className={cn(
+                "gap-2",
+                dateRange && "border-primary text-primary",
+              )}
+            >
               <Calendar className="w-4 h-4" />
               {dateRange?.from ? (
                 dateRange.to ? (
                   <>
-                    {format(dateRange.from, 'MMM d')} - {format(dateRange.to, 'MMM d')}
+                    {format(dateRange.from, "MMM d")} -{" "}
+                    {format(dateRange.to, "MMM d")}
                   </>
                 ) : (
-                  format(dateRange.from, 'MMM d, yyyy')
+                  format(dateRange.from, "MMM d, yyyy")
                 )
               ) : (
-                'Date Range'
+                "Date Range"
               )}
             </Button>
           </PopoverTrigger>
@@ -103,7 +118,13 @@ export function OrderFilters({
         {/* Country Filter */}
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('gap-2', selectedCountries.length > 0 && 'border-primary text-primary')}>
+            <Button
+              variant="outline"
+              className={cn(
+                "gap-2",
+                selectedCountries.length > 0 && "border-primary text-primary",
+              )}
+            >
               <Filter className="w-4 h-4" />
               Country
               {selectedCountries.length > 0 && (
@@ -121,9 +142,16 @@ export function OrderFilters({
                   <Checkbox
                     id={`country-${country}`}
                     checked={selectedCountries.includes(country)}
-                    onCheckedChange={() => onCountriesChange(toggleArrayItem(selectedCountries, country))}
+                    onCheckedChange={() =>
+                      onCountriesChange(
+                        toggleArrayItem(selectedCountries, country),
+                      )
+                    }
                   />
-                  <Label htmlFor={`country-${country}`} className="text-sm cursor-pointer">
+                  <Label
+                    htmlFor={`country-${country}`}
+                    className="text-sm cursor-pointer"
+                  >
                     {country}
                   </Label>
                 </div>
@@ -135,7 +163,13 @@ export function OrderFilters({
         {/* Warehouse Filter */}
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('gap-2', selectedWarehouses.length > 0 && 'border-primary text-primary')}>
+            <Button
+              variant="outline"
+              className={cn(
+                "gap-2",
+                selectedWarehouses.length > 0 && "border-primary text-primary",
+              )}
+            >
               <Filter className="w-4 h-4" />
               Warehouse
               {selectedWarehouses.length > 0 && (
@@ -153,9 +187,16 @@ export function OrderFilters({
                   <Checkbox
                     id={`warehouse-${warehouse}`}
                     checked={selectedWarehouses.includes(warehouse)}
-                    onCheckedChange={() => onWarehousesChange(toggleArrayItem(selectedWarehouses, warehouse))}
+                    onCheckedChange={() =>
+                      onWarehousesChange(
+                        toggleArrayItem(selectedWarehouses, warehouse),
+                      )
+                    }
                   />
-                  <Label htmlFor={`warehouse-${warehouse}`} className="text-sm cursor-pointer">
+                  <Label
+                    htmlFor={`warehouse-${warehouse}`}
+                    className="text-sm cursor-pointer"
+                  >
                     {warehouse}
                   </Label>
                 </div>
@@ -167,7 +208,13 @@ export function OrderFilters({
         {/* Status Filter */}
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('gap-2', selectedStatuses.length > 0 && 'border-primary text-primary')}>
+            <Button
+              variant="outline"
+              className={cn(
+                "gap-2",
+                selectedStatuses.length > 0 && "border-primary text-primary",
+              )}
+            >
               <Filter className="w-4 h-4" />
               Status
               {selectedStatuses.length > 0 && (
@@ -185,9 +232,16 @@ export function OrderFilters({
                   <Checkbox
                     id={`status-${status}`}
                     checked={selectedStatuses.includes(status)}
-                    onCheckedChange={() => onStatusesChange(toggleArrayItem(selectedStatuses, status))}
+                    onCheckedChange={() =>
+                      onStatusesChange(
+                        toggleArrayItem(selectedStatuses, status),
+                      )
+                    }
                   />
-                  <Label htmlFor={`status-${status}`} className="text-sm cursor-pointer">
+                  <Label
+                    htmlFor={`status-${status}`}
+                    className="text-sm cursor-pointer"
+                  >
                     {status}
                   </Label>
                 </div>
@@ -198,7 +252,12 @@ export function OrderFilters({
 
         {/* Clear Filters */}
         {activeFiltersCount > 0 && (
-          <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-muted-foreground hover:text-foreground">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAllFilters}
+            className="text-muted-foreground hover:text-foreground"
+          >
             <X className="w-4 h-4 mr-1" />
             Clear filters ({activeFiltersCount})
           </Button>

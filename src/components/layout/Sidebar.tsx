@@ -1,8 +1,19 @@
-import { NavLink, useLocation } from 'react-router-dom';
-import { Package, Settings, Activity, Box, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  Package,
+  Settings,
+  Activity,
+  Box,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -10,9 +21,24 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: '/', icon: Package, label: 'Order Allocations', description: 'View and manage orders' },
-  { to: '/rules', icon: Settings, label: 'Allocation Rules', description: 'Configure allocation settings' },
-  { to: '/monitor', icon: Activity, label: 'Processing Monitor', description: 'Real-time activity' },
+  {
+    to: "/",
+    icon: Package,
+    label: "Order Allocations",
+    description: "View and manage orders",
+  },
+  {
+    to: "/rules",
+    icon: Settings,
+    label: "Allocation Rules",
+    description: "Configure allocation settings",
+  },
+  {
+    to: "/monitor",
+    icon: Activity,
+    label: "Processing Monitor",
+    description: "Real-time activity",
+  },
 ];
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
@@ -21,45 +47,45 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300',
-        collapsed ? 'w-16' : 'w-64'
+        "fixed left-0 top-0 z-40 h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300",
+        collapsed ? "w-16" : "w-64",
       )}
     >
       {/* Logo */}
-      <div className={cn(
-        'flex items-center h-16 px-4 border-b border-sidebar-border',
-        collapsed ? 'justify-center' : 'gap-3'
-      )}>
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg gradient-primary">
-          <Box className="w-5 h-5 text-primary-foreground" />
-        </div>
-        {!collapsed && (
-          <div className="animate-fade-in">
-            <span className="text-sm font-semibold text-sidebar-primary-foreground">Allocate</span>
-            <span className="text-sm font-light text-sidebar-muted">Pro</span>
-          </div>
+      <div
+        className={cn(
+          "flex flex-col items-center h-20 px-4 border-b border-sidebar-border justify-center gap-1",
         )}
+      >
+        {/* Logo image - replace src with your logo file */}
+        <img
+          src="/logo-inverted.png"
+          alt="Logo"
+          className="w-full max-w-[180px] h-auto object-contain mb-2"
+        />
       </div>
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1 p-3">
         {navItems.map((item) => {
           const isActive = location.pathname === item.to;
-          
+
           const linkContent = (
             <NavLink
               to={item.to}
               className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                 isActive
-                  ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-md'
-                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                collapsed && 'justify-center px-2'
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-md"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                collapsed && "justify-center px-2",
               )}
             >
               <item.icon className="w-5 h-5 shrink-0" />
               {!collapsed && (
-                <span className="text-sm font-medium animate-fade-in">{item.label}</span>
+                <span className="text-sm font-medium animate-fade-in">
+                  {item.label}
+                </span>
               )}
             </NavLink>
           );
@@ -67,12 +93,12 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           if (collapsed) {
             return (
               <Tooltip key={item.to} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  {linkContent}
-                </TooltipTrigger>
+                <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
                 <TooltipContent side="right" className="flex flex-col">
                   <span className="font-medium">{item.label}</span>
-                  <span className="text-xs text-muted-foreground">{item.description}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {item.description}
+                  </span>
                 </TooltipContent>
               </Tooltip>
             );
@@ -89,8 +115,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           size="sm"
           onClick={onToggle}
           className={cn(
-            'w-full text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-            collapsed && 'justify-center px-2'
+            "w-full text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            collapsed && "justify-center px-2",
           )}
         >
           {collapsed ? (
